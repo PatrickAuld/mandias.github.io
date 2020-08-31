@@ -28,6 +28,7 @@ jobs:
           git config --local user.name "$(git log --format='%ae' -n 1)"
           git config --local committer.email "Patrick+githubaction@patrickauld.com"
           git config --local committer.name "Mandias GH Page Deploy Bot Action"
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/PatrickAuld/mandias.github.io.git
 
       # Runs a single command using the runners shell
       - name: Build and deploy to gh-pages
