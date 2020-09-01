@@ -17,23 +17,81 @@ import { Box, Paper, Divider } from "@material-ui/core"
 import SplashImage from "./splash-image.jpg"
 import HeadshotImage from "./headshot.jpg"
 import { createMuiTheme } from "@material-ui/core/styles"
+import { graphql, StaticQuery, useStaticQuery } from "gatsby"
+import Img from "gatsby-image"
+import BackgroundImage from "gatsby-background-image"
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      // light: will be calculated from palette.primary.main,
-      main: "#ff4400",
-      // dark: will be calculated from palette.primary.main,
-      // contrastText: will be calculated to contrast with palette.primary.main
-    },
-    secondary: {
-      light: "#0066ff",
-      main: "#0044ff",
-      // dark: will be calculated from palette.secondary.main,
-      contrastText: "#ffcc00",
-    },
+
+const useStyles = makeStyles(theme => ({
+  icon: {
+    marginRight: theme.spacing(2),
   },
-})
+  heroContent: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(8, 0, 6),
+  },
+  heroButtons: {
+    marginTop: theme.spacing(4),
+  },
+  cardGrid: {
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(8),
+  },
+  card: {
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+  },
+  cardMedia: {
+    paddingTop: "56.25%", // 16:9
+  },
+  cardContent: {
+    flexGrow: 1,
+  },
+  footer: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(6),
+  },
+  heroBox: {
+    margin: 0,
+    padding: 0,
+    display: "grid",
+    height: "100%",
+  },
+  heroImage: {
+    position: "relative",
+    height: "800px",
+    width: "auto",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+  },
+  heroTitle: {
+    textAlign: "right",
+    paddingRight: "8px",
+  },
+  heroText: {
+    position: "absolute",
+    bottom: "15%",
+    paddingLeft: "5%",
+    color: theme.palette.background.paper,
+  },
+  aboutBox: {},
+  aboutContainer: {
+    backgroundColor: theme.palette.background.paper,
+  },
+  aboutHeadshot: {
+    borderRadius: "50%",
+    width: "100%",
+    maxWidth: "500px",
+    height: "auto",
+    alignContent: "center",
+  },
+  aboutText: {},
+  contactBox: {
+    backgroundColor: theme.palette.background.default,
+  },
+}))
 
 function MainFooter(props: { classes: { footer: string } }) {
   return (
@@ -84,113 +142,154 @@ class ContactDetail extends React.Component {
   }
 }
 
-const useStyles = makeStyles(theme => ({
-  icon: {
-    marginRight: theme.spacing(2),
-  },
-  heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
-  },
-  heroButtons: {
-    marginTop: theme.spacing(4),
-  },
-  cardGrid: {
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8),
-  },
-  card: {
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-  },
-  cardMedia: {
-    paddingTop: "56.25%", // 16:9
-  },
-  cardContent: {
-    flexGrow: 1,
-  },
-  footer: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6),
-  },
-  heroBox: {
-    margin: 0,
-    padding: 0,
-    display: "grid",
-    height: "100%",
-  },
-  heroImage: {
-    position: "relative",
-    height: "800px",
-    width: "auto",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-    backgroundImage: "url(" + SplashImage + ")",
-    backgroundSize: "cover",
-  },
-  heroTitle: {
-    textAlign: 'right',
-    paddingRight: "8px",
-  },
-  heroText: {
-    position: "absolute",
-    bottom: "15%",
-    paddingLeft: "5%",
-    color: theme.palette.background.paper,
-  },
-  aboutBox: {
-    
-  },
-  aboutContainer: {
-    backgroundColor: theme.palette.background.paper
-  },
-  aboutHeadshot: {
-    borderRadius: "50%",
-    width: "100%",
-    maxWidth: "500px",
-    height: "auto",
-    alignContent: "center",
-  },
-  aboutText: {},
-  contactBox: {
-    backgroundColor: theme.palette.background.default,
-  },
-}))
+{/* Main splash screen and motto */}
+class Hero extends React.Component {
+  render() {
+    return (
+      <Box className={this.props.classes.heroBox}>
+        <Container>
+          <BackgroundImage
+            className={this.props.classes.heroImage}
+            fluid={this.props.heroImage.fluid}
+          >
+            <Link color="primary" href="https://mandias.xyz/">
+              <Typography
+                className={this.props.classes.heroTitle}
+                variant="h6"
+                color="textSecondary"
+                noWrap
+              >
+                Mandias
+              </Typography>
+            </Link>
+            <Typography
+              className={this.props.classes.heroText}
+              component="h2"
+              variant="h2"
+              align="left"
+              gutterBottom
+            >
+              Leaders work in Systems
+            </Typography>
+          </BackgroundImage>
+        </Container>
+      </Box>
+    )
+  }
+}
 
-export default function Album() {
+{/* Site and offering description */}
+class AboutPatrick extends React.Component {
+  render() {
+    return (
+      <Box className={this.props.classes.aboutBox}>
+        <Container>
+          <Grid
+            container
+            className={this.props.classes.aboutContainer}
+            spacing={2}
+            alignItems="center"
+          >
+            <Grid item xs={12} sm={6}>
+              <Img
+                className={this.props.classes.aboutHeadshot}
+                fluid={this.props.headshotImage.fluid}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Typography
+                variant="h5"
+                align="center"
+                color="textSecondary"
+                paragraph
+              >
+                Get coaching on maximizing systems, projects, organizational
+                changes, and architecture.
+              </Typography>
+                <Typography
+                variant="h5"
+                align="center"
+                color="textSecondary"
+                paragraph
+              >
+                Evolving your offerings to meet changing needs impacts more than
+                your tech stack. Understanding the interactions between
+                individuals, teams, and groups gives you the insights required
+                to empathically make changes.
+              </Typography>
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
+    )
+  }
+}
+{/* Contact info 3 box */}
+class ContactInfo extends React.Component {
+  render() {
+    return (
+      <Box className={this.props.classes.contactBox}>
+        <Container>
+          <Typography variant="h4" align="center">
+            Contact
+          </Typography>
+          <p />
+          <Grid container spacing={2} justify="center">
+            <Grid item>
+              <ContactDetail
+                title="Email"
+                link="patrick@patrickauld.com"
+                linkHref="mailto:patrick+mandias@patrickauld.com"
+              />
+            </Grid>
+            <Grid item>
+              <ContactDetail
+                title="LinkedIn"
+                link="/in/PatrickAuld"
+                linkHref="https://linkedin.com/in/patrickauld"
+              />
+            </Grid>
+            <Grid item>
+              <ContactDetail
+                title="Twitter"
+                link="@PatrickAuld"
+                linkHref="https://twitter.com/patrickauld"
+              />
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
+    )
+  }
+}
+
+export default function HomePage() {
   const classes = useStyles()
-
+  const data = useStaticQuery(graphql`
+  query PageQuery {
+    headshotImage: file(relativePath: { eq: "headshot.jpg" }) {
+      childImageSharp {
+        fluid {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+    heroImage: file(relativePath: { eq: "splash-image.jpg" }) {
+      childImageSharp {
+        # Specify the image processing specifications right in the query.
+        fluid {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+  }
+`)
   return (
     <React.Fragment>
       <React.StrictMode>
         <CssBaseline />
         <main>
-          <Box className={classes.heroBox}>
-            <Container>
-              <div className={classes.heroImage}>
-                <Link color="primary" href="https://mandias.xyz/">
-                  <Typography
-                    className={classes.heroTitle}
-                    variant="h6"
-                    color="textSecondary"
-                    noWrap
-                  >
-                    Mandias
-                  </Typography>
-                </Link>
-                <Typography
-                  className={classes.heroText}
-                  component="h2"
-                  variant="h2"
-                  align="left"
-                  gutterBottom
-                >
-                  Leaders work in Systems
-                </Typography>
-              </div>
-            </Container>
-          </Box>
+          <Hero classes={classes} heroImage={data.heroImage.childImageSharp} />
 
           {/* TODO Figure out padding */}
           <Box>
@@ -200,32 +299,9 @@ export default function Album() {
               </Typography>
             </Container>
           </Box>
+
           {/* about Patrick */}
-          <Box className={classes.aboutBox}>
-            <Container>
-              <Grid container className={classes.aboutContainer} spacing={2} alignItems="center">
-                <Grid item xs={12} sm={6}>
-                  <img className={classes.aboutHeadshot} src={HeadshotImage} />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Typography
-                    variant="h5"
-                    align="center"
-                    color="textSecondary"
-                    paragraph
-                  >
-                    Get coaching on maximizing systems, projects, organizational
-                    changes, and architecture.
-                    <p />
-                    Evolving your offerings to meet changing needs impacts more
-                    than your tech stack. Understanding the interactions between
-                    individuals, teams, and groups gives you the insights
-                    required to empathically make changes.
-                  </Typography>
-                </Grid>
-              </Grid>
-            </Container>
-          </Box>
+          <AboutPatrick classes={classes} headshotImage={data.headshotImage.childImageSharp} />
 
           {/* TODO Figure out padding */}
           <Box>
@@ -237,37 +313,7 @@ export default function Album() {
           </Box>
 
           {/* Contact */}
-          <Box className={classes.contactBox}>
-            <Container>
-              <Typography variant="h4" align="center">
-                Contact
-              </Typography>
-              <p />
-              <Grid container spacing={2} justify="center">
-                <Grid item>
-                  <ContactDetail
-                    title="Email"
-                    link="patrick@patrickauld.com"
-                    linkHref="mailto:patrick+mandias@patrickauld.com"
-                  />
-                </Grid>
-                <Grid item>
-                  <ContactDetail
-                    title="LinkedIn"
-                    link="/in/PatrickAuld"
-                    linkHref="https://linkedin.com/in/patrickauld"
-                  />
-                </Grid>
-                <Grid item>
-                  <ContactDetail
-                    title="Twitter"
-                    link="@PatrickAuld"
-                    linkHref="https://twitter.com/patrickauld"
-                  />
-                </Grid>
-              </Grid>
-            </Container>
-          </Box>
+          <ContactInfo classes={classes} />
         </main>
 
         {/* Footer */}
