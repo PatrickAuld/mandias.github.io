@@ -53,8 +53,6 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(6),
   },
   heroBox: {
-    margin: 0,
-    padding: 0,
     display: "grid",
     height: "100%",
   },
@@ -76,7 +74,9 @@ const useStyles = makeStyles(theme => ({
     paddingLeft: "5%",
     color: theme.palette.background.paper,
   },
-  aboutBox: {},
+  aboutBox: {
+    padding: "8px"
+  },
   aboutContainer: {
     backgroundColor: theme.palette.background.paper,
   },
@@ -291,26 +291,8 @@ export default function HomePage() {
         <main>
           <Hero classes={classes} heroImage={data.heroImage.childImageSharp} />
 
-          {/* TODO Figure out padding */}
-          <Box>
-            <Container>
-              <Typography>
-                <p />
-              </Typography>
-            </Container>
-          </Box>
-
           {/* about Patrick */}
           <AboutPatrick classes={classes} headshotImage={data.headshotImage.childImageSharp} />
-
-          {/* TODO Figure out padding */}
-          <Box>
-            <Container>
-              <Typography>
-                <p />
-              </Typography>
-            </Container>
-          </Box>
 
           {/* Contact */}
           <ContactInfo classes={classes} />
