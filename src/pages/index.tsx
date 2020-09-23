@@ -20,6 +20,7 @@ import { createMuiTheme } from "@material-ui/core/styles"
 import { graphql, StaticQuery, useStaticQuery } from "gatsby"
 import Img from "gatsby-image"
 import BackgroundImage from "gatsby-background-image"
+import { CallMissedSharp, FunctionsSharp } from "@material-ui/icons"
 
 
 const useStyles = makeStyles(theme => ({
@@ -79,6 +80,7 @@ const useStyles = makeStyles(theme => ({
   },
   aboutContainer: {
     backgroundColor: theme.palette.background.paper,
+    height: "auto"
   },
   aboutHeadshot: {
     borderRadius: "50%",
@@ -91,6 +93,14 @@ const useStyles = makeStyles(theme => ({
   contactBox: {
     backgroundColor: theme.palette.background.default,
   },
+  servicesContainer: {
+    backgroundColor: theme.palette.background.paper,
+    height: "auto"
+  },
+  serviceCard: {
+    verticalAlign: "top",
+    height: "100%"
+  }
 }))
 
 function MainFooter(props: { classes: { footer: string } }) {
@@ -124,111 +134,144 @@ function Copyright() {
   )
 }
 
-class ContactDetail extends React.Component {
-  render() {
-    return (
-      <Box minWidth="220px" minHeight="80px">
-        <Paper elevation={1}>
-          <Typography variant="h5" align="center" color="textPrimary">
-            {this.props.title}
-          </Typography>
-          <Divider variant="middle" />
-          <Typography align="center" color="textSecondary">
-            <Link href={this.props.linkHref}>{this.props.link}</Link>
-          </Typography>
-        </Paper>
-      </Box>
-    )
-  }
+function ContactDetail(props: { linkHref: string, title: string, link: string }) {
+  return (
+    <Box minWidth="220px" minHeight="80px">
+      <Paper elevation={1}>
+        <Typography variant="h5" align="center" color="textPrimary">
+          {props.title}
+        </Typography>
+        <Divider variant="middle" />
+        <Typography align="center" color="textSecondary">
+          <Link href={props.linkHref}>{props.link}</Link>
+        </Typography>
+      </Paper>
+    </Box>
+  )
 }
 
-{/* Main splash screen and motto */}
-class Hero extends React.Component {
-  render() {
-    return (
-      <Box className={this.props.classes.heroBox}>
-        <Container>
-          <BackgroundImage
-            className={this.props.classes.heroImage}
-            fluid={this.props.heroImage.fluid}
-          >
-            <Link color="primary" href="https://mandias.xyz/">
-              <Typography
-                className={this.props.classes.heroTitle}
-                variant="h6"
-                color="textSecondary"
-                noWrap
-              >
-                Mandias
-              </Typography>
-            </Link>
+{/* Main splash screen and motto */ }
+function Hero(props: any) {
+  return (
+    <Box className={props.classes.heroBox}>
+      <Container>
+        <BackgroundImage
+          className={props.classes.heroImage}
+          fluid={props.heroImage.fluid}
+        >
+          <Link color="primary" href="https://mandias.xyz/">
             <Typography
-              className={this.props.classes.heroText}
-              component="h2"
-              variant="h2"
-              align="left"
-              gutterBottom
+              className={props.classes.heroTitle}
+              variant="h6"
+              color="textSecondary"
+              noWrap
             >
-              Leaders work in Systems
+              Mandias
+              </Typography>
+          </Link>
+          <Typography
+            className={props.classes.heroText}
+            component="h2"
+            variant="h2"
+            align="left"
+            gutterBottom
+          >
+            Leaders work in Systems
             </Typography>
-          </BackgroundImage>
-        </Container>
-      </Box>
-    )
-  }
+        </BackgroundImage>
+      </Container>
+    </Box>
+  )
 }
 
-{/* Site and offering description */}
-class AboutPatrick extends React.Component {
-  render() {
-    return (
-      <Box className={this.props.classes.aboutBox}>
-        <Container>
-          <Grid
-            container
-            className={this.props.classes.aboutContainer}
-            spacing={2}
-            alignItems="center"
-          >
-            <Grid item xs={12} sm={6}>
-              <Img
-                className={this.props.classes.aboutHeadshot}
-                fluid={this.props.headshotImage.fluid}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Typography
-                variant="h5"
-                align="center"
-                color="textSecondary"
-                paragraph
-              >
-                Get coaching on maximizing systems, projects, organizational
-                changes, and architecture.
-              </Typography>
-                <Typography
-                variant="h5"
-                align="center"
-                color="textSecondary"
-                paragraph
-              >
-                Evolving your offerings to meet changing needs impacts more than
-                your tech stack. Understanding the interactions between
-                individuals, teams, and groups gives you the insights required
-                to empathically make changes.
-              </Typography>
-            </Grid>
+{/* Site and offering description */ }
+function AboutPatrick(props: any) {
+  return (
+    <Box className={props.classes.aboutBox}>
+      <Container>
+        <Grid
+          container
+          className={props.classes.aboutContainer}
+          spacing={2}
+          alignItems="center"
+        >
+          <Grid item xs={12} sm={6}>
+            <Img
+              className={props.classes.aboutHeadshot}
+              fluid={props.headshotImage.fluid}
+            />
           </Grid>
-        </Container>
-      </Box>
-    )
-  }
+          <Grid item xs={12} sm={6}>
+            <Typography
+              variant="h5"
+              align="center"
+              color="textSecondary"
+              paragraph
+            >
+              Patrick is a Architect, Manager, Developer, and Entrepreneur.
+              <p />
+              He has been the first employee at startups and been responsible dozens of individuals and teams in public companies.
+              <p />
+              These experiences lead him to recognize the commonality in realizing an idea and the strong interactions between companies' organizational and technical aspects.
+            </Typography>
+          </Grid>
+        </Grid>
+      </Container>
+    </Box>
+  )
 }
-{/* Contact info 3 box */}
-class ContactInfo extends React.Component {
-  render() {
+
+function ServiceDetail(props: { title: string, description: string, classes: {serviceCard: any } }) {
+  return (
+    <Paper
+      className={props.classes.serviceCard}
+    >
+      <Typography
+        variant="h4"
+        align="center"
+        color="textPrimary"
+      >
+        {props.title}
+      </Typography>
+      <Typography
+        variant="h5"
+        align="center"
+        color="textSecondary"
+        paragraph
+      >
+        {props.description}
+      </Typography>
+    </Paper>
+  )
+}
+
+{/* Site and offering description */ }
+function ServicesDetails(props: any) {
+  return (
+    <Box className={props.classes.aboutBox}>
+      <Container>
+        <Grid
+          container
+          className={props.classes.servicesContainer}
+          spacing={2}
+          alignItems="center"
+        >
+          <Grid item xs={12} sm={6}>
+            <ServiceDetail classes={props.classes} title="Individuals" description="One on One coaching for engineering managers, tech leads, software architects, and those in technical leadership positions." />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <ServiceDetail classes={props.classes} title="Groups" description="Group training for systems thinking, strategic alignment, and review of organizational and technical architecture." />
+          </Grid>
+        </Grid>
+      </Container>
+    </Box>
+  )
+}
+
+{/* Contact info 3 box */ }
+function ContactInfo(props: any) {
     return (
-      <Box className={this.props.classes.contactBox}>
+      <Box className={props.classes.contactBox}>
         <Container>
           <Typography variant="h4" align="center">
             Contact
@@ -260,7 +303,6 @@ class ContactInfo extends React.Component {
         </Container>
       </Box>
     )
-  }
 }
 
 export default function HomePage() {
@@ -293,6 +335,8 @@ export default function HomePage() {
 
           {/* about Patrick */}
           <AboutPatrick classes={classes} headshotImage={data.headshotImage.childImageSharp} />
+
+          <ServicesDetails classes={classes} />
 
           {/* Contact */}
           <ContactInfo classes={classes} />
